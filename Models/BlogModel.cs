@@ -14,14 +14,14 @@ public class Blog
         public string Body { get; set; }
 
      
-        public ICollection<string> Images { get; set; }
+        public IList<string> Images { get; set; }
 
         public DateTime PostedDate { get; set; }
 
         public int UserId { get; set; }
-        public User Author { get; set; }
+        public User? Author { get; set; }
 
-        public ICollection<Reaction> Reactions { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Reaction>? Reactions { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 

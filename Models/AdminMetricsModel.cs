@@ -18,9 +18,9 @@ public class AdminMetrics
 
     public int TotalComments { get; set; }
 
-    public int TopPostId { get; set; }
-    public Blog TopPost { get; set; }
+ 
+    public ICollection<Blog> Top10Post { get; set; }
 
-    public int TopBloggerId { get; set; }
-    public User TopBlogger { get; set; }
+   
+    public ICollection<User> TopBlogger { get; set; }
 }

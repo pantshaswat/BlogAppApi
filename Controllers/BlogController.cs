@@ -223,7 +223,7 @@ public async Task<ActionResult<Blog>> GetBlog([FromRoute] int id)
                 ReactorUsername = reaction.Reactor.Username // Include only the Username property of Reactor
             }).ToList()
         })
-        .FirstOrDefaultAsync();
+        .ToListAsync();
 
     if (blog == null)
     {

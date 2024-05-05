@@ -12,10 +12,10 @@ public class Comment
         public DateTime CommentedDate { get; set; }
 
         public int UserId { get; set; }
-        public User Commenter { get; set; }
+        public User? Commenter { get; set; }
 
         public int BlogId { get; set; }
-        public Blog Blog { get; set; }
+        public Blog? Blog { get; set; }
 
-        public ICollection<Reaction> Reactions { get; set; }
+        public ICollection<Reaction>? Reactions { get; set; }
     }

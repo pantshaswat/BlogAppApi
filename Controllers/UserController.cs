@@ -15,6 +15,8 @@ public class UserController : ControllerBase
         _context = context;
     }
 
+
+    
     // GET: api/User
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -108,17 +110,34 @@ public class UserController : ControllerBase
 
     //POST: api/User/Login
     [HttpPost("Login")]
-    public async Task<ActionResult<User>> Login(string Email, string Password)
+public async Task<ActionResult<User>> Login([FromBody] LoginModel model)
+{
+    var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+    if (userInDb == null)
     {
-        var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == Email);
-        if (userInDb == null)
-        {
-            return NotFound("Invalid email");
-        }
-        if (userInDb.Password != Password)
-        {
-            return BadRequest("Invalid password");
-        }
-        return Ok(userInDb);
+        return NotFound("Invalid email");
     }
+    if (userInDb.Password != model.Password)
+    {
+        return BadRequest("Invalid password");
+    }
+    
+    return Ok(userInDb);
 }
+
+public class LoginModel
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
+
+}
+//  var userCookieOptions = new CookieOptions
+//     {
+//         Expires = DateTime.Now.AddDays(1),
+//     };
+
+//    var userInfo = new { UserId = user.UserID, Email = user.Email, Username = user.Username };
+// var userInfoJson = JsonSerializer.Serialize(userInfo);
+
+// Response.Cookies.Append("UserCookie", userInfoJson, userCookieOptions);

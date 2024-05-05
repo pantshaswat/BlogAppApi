@@ -12,11 +12,11 @@ public class Reaction
         public string Type { get; set; } // "Upvote" or "Downvote"
 
         public int UserId { get; set; }
-        public User Reactor { get; set; }
+        public User? Reactor { get; set; }
 
         public int? BlogId { get; set; }
-        public Blog Blog { get; set; }
+        public Blog? Blog { get; set; }
 
         public int? CommentId { get; set; }
-        public Comment Comment { get; set; }
+        public Comment? Comment { get; set; }
     }

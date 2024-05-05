@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 
     [Required]
     [MaxLength(20)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
     public ICollection<Blog>? Blogs { get; set; }
     public ICollection<Comment>? Comments { get; set; }

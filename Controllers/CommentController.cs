@@ -45,12 +45,13 @@ namespace blogApp.Controllers;
             {
                 return BadRequest();
             }
-
+            comment.CommentedDate = DateTime.Now;
             _context.Entry(comment).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(comment);
             }
             catch (DbUpdateConcurrencyException)
             {

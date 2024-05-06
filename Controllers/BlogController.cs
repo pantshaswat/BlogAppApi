@@ -249,14 +249,16 @@ public async Task<ActionResult<Blog>> GetBlog([FromRoute] int id)
         {
             if (id != blog.BlogId)
             {
+                Console.WriteLine("BlogId does not match");
                 return BadRequest();
             }
-
+            blog.PostedDate = DateTime.Now;
             _context.Entry(blog).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(blog);
             }
             catch (DbUpdateConcurrencyException)
             {

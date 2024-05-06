@@ -232,6 +232,51 @@ public async Task<ActionResult<Blog>> GetBlog([FromRoute] int id)
 
     return Ok(blog);
 }
+[HttpGet("User/{userId}")]
+public async Task<ActionResult<Blog>> GetUsersBlog([FromRoute] int userId)
+{
+    var blog = await _context.Blogs
+        .Where(b => b.UserId == userId)
+        .Select(blog => new
+        {
+            blog.BlogId,
+            blog.Title,
+            blog.Body,
+            blog.Images,
+            blog.UserId, // Include the UserId property of Blog
+            AuthorUsername = blog.Author.Username, // Include only the Username property of Author
+            blog.PostedDate,
+            Comments = blog.Comments.Select(comment => new
+            {
+                comment.CommentId,
+                comment.Content,
+                CommenterUsername = comment.Commenter.Username, // Include only the Username property of Commenter
+                comment.CommentedDate,
+                Reactions = comment.Reactions.Select(reaction => new
+                {
+                    reaction.ReactionId,
+                    reaction.Type,
+                    ReactorUsername = reaction.Reactor.Username // Include only the Username property of Reactor
+                }).ToList()
+            }).
+            OrderByDescending(comment => comment.CommentedDate).
+            ToList(),
+            Reactions = blog.Reactions.Select(reaction => new
+            {
+                reaction.ReactionId,
+                reaction.Type,
+                ReactorUsername = reaction.Reactor.Username // Include only the Username property of Reactor
+            }).ToList()
+        })
+        .ToListAsync();
+
+    if (blog == null)
+    {
+        return NotFound();
+    }
+
+    return Ok(blog);
+}
 
 
         [HttpPost]

@@ -14,45 +14,47 @@ namespace blogApp.Controllers;
             _context = context;
         }
 
-       [HttpGet]
-        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs()
+      [HttpGet("paginate")]
+public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs(int pageNumber = 1, int pageSize = 10)
+{
+    var blogs = await _context.Blogs
+        .Select(blog => new
         {
-           var blogs = await _context.Blogs
-    .Select(blog => new
-    {
-        blog.BlogId,
-        blog.Title,
-        blog.Body,
-        blog.Images,
-       blog.UserId, // Include the UserId property of Blog
-        AuthorUsername = blog.Author.Username, // Include only the Username property of Author
-        blog.PostedDate,
-        Comments = blog.Comments.Select(comment => new
-        {
-            comment.CommentId,
-            comment.Content,
-            CommenterUsername = comment.Commenter.Username, // Include only the Username property of Commenter
-            comment.CommentedDate,
-            Reactions = comment.Reactions.Select(reaction => new
+            blog.BlogId,
+            blog.Title,
+            blog.Body,
+            blog.Images,
+            blog.UserId,
+            AuthorUsername = blog.Author.Username,
+            blog.PostedDate,
+            Comments = blog.Comments.Select(comment => new
+            {
+                comment.CommentId,
+                comment.Content,
+                CommenterUsername = comment.Commenter.Username,
+                comment.CommentedDate,
+                Reactions = comment.Reactions.Select(reaction => new
+                {
+                    reaction.ReactionId,
+                    reaction.Type,
+                    ReactorUsername = reaction.Reactor.Username
+                }).ToList()
+            }).ToList(),
+            Reactions = blog.Reactions.Select(reaction => new
             {
                 reaction.ReactionId,
                 reaction.Type,
-                ReactorUsername = reaction.Reactor.Username // Include only the Username property of Reactor
+                ReactorUsername = reaction.Reactor.Username
             }).ToList()
-        }).ToList(),
-        Reactions = blog.Reactions.Select(reaction => new
-        {
-            reaction.ReactionId,
-            reaction.Type,
-            ReactorUsername = reaction.Reactor.Username // Include only the Username property of Reactor
-        }).ToList()
-    })
-    .OrderByDescending(blog => blog.PostedDate)
-    .ToListAsync();
+        })
+        .OrderByDescending(blog => blog.PostedDate)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
 
+    return Ok(blogs);
+}
 
-            return Ok(blogs);
-        }
       [HttpGet("popularity")]
 public async Task<ActionResult<IEnumerable<Blog>>> GetPopularBlogs()
 {

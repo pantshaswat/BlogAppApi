@@ -1,3 +1,4 @@
+using blogApp.Data;
 using blogAppApi.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,7 +62,13 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAllOrigins");
 app.MapControllers();
 app.UseHttpsRedirection();
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2),
 
+};
+
+app.UseWebSockets(webSocketOptions);
 
 app.Run();
 

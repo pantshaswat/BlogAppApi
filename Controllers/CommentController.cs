@@ -33,6 +33,7 @@ namespace blogApp.Controllers;
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
+            
             comment.CommentedDate = DateTime.Now;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();

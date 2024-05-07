@@ -13,21 +13,26 @@ namespace blogApp.Controllers;
         {
             _context = context;
         }
-        [HttpGet("monthlycount")]
-        public async Task<ActionResult<IEnumerable<object>>> GetMonthlyBlogPostCount()
-        {
-            var monthlyBlogPostCount = await _context.Blogs
-                .GroupBy(blog => new { blog.PostedDate.Year, blog.PostedDate.Month })
-                .Select(group => new
-                {
-                    Year = group.Key.Year,
-                    Month = group.Key.Month,
-                    Count = group.Count()
-                })
-                .ToListAsync();
+     
 
-            return Ok(monthlyBlogPostCount);
-        }
+[HttpGet("monthlycount")]
+public async Task<ActionResult<IEnumerable<object>>> GetMonthlyBlogPostCount()
+{
+    var monthlyCounts = await _context.Blogs
+        .GroupBy(blog => new { blog.PostedDate.Year, blog.PostedDate.Month })
+        .Select(group => new
+        {
+            Year = group.Key.Year,
+            Month = group.Key.Month,
+            TotalBlogPosts = group.Count(),
+            TotalUpvotes = group.SelectMany(blog => blog.Reactions).Count(reaction => reaction.Type == "Upvote"),
+            TotalDownvotes = group.SelectMany(blog => blog.Reactions).Count(reaction => reaction.Type == "Downvote"),
+            TotalComments = group.SelectMany(blog => blog.Comments).Count()
+        })
+        .ToListAsync();
+
+    return Ok(monthlyCounts);
+}
         [HttpGet("counts")]
         public async Task<ActionResult<AdminMetrics>> GetAdminMetrics()
         {

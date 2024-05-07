@@ -299,7 +299,7 @@ public async Task<ActionResult<Blog>> GetUsersBlog([FromRoute] int userId)
                 Console.WriteLine("BlogId does not match");
                 return BadRequest();
             }
-            blog.PostedDate = DateTime.Now;
+            // blog.PostedDate = DateTime.Now;
             _context.Entry(blog).State = EntityState.Modified;
 
             try

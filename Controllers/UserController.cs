@@ -132,12 +132,3 @@ public class LoginModel
 }
 
 }
-//  var userCookieOptions = new CookieOptions
-//     {
-//         Expires = DateTime.Now.AddDays(1),
-//     };
-
-//    var userInfo = new { UserId = user.UserID, Email = user.Email, Username = user.Username };
-// var userInfoJson = JsonSerializer.Serialize(userInfo);
-
-// Response.Cookies.Append("UserCookie", userInfoJson, userCookieOptions);

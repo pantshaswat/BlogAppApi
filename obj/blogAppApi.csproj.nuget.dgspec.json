@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/shashinoorghimire/Documents/NET/BlogAppApi/blogAppApi.csproj": {}
+    "C:\\Users\\Acer\\Desktop\\my projects\\blogAppApi\\blogAppApi.csproj": {}
   },
   "projects": {
-    "/Users/shashinoorghimire/Documents/NET/BlogAppApi/blogAppApi.csproj": {
+    "C:\\Users\\Acer\\Desktop\\my projects\\blogAppApi\\blogAppApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/shashinoorghimire/Documents/NET/BlogAppApi/blogAppApi.csproj",
+        "projectUniqueName": "C:\\Users\\Acer\\Desktop\\my projects\\blogAppApi\\blogAppApi.csproj",
         "projectName": "blogAppApi",
-        "projectPath": "/Users/shashinoorghimire/Documents/NET/BlogAppApi/blogAppApi.csproj",
-        "packagesPath": "/Users/shashinoorghimire/.nuget/packages/",
-        "outputPath": "/Users/shashinoorghimire/Documents/NET/BlogAppApi/obj/",
+        "projectPath": "C:\\Users\\Acer\\Desktop\\my projects\\blogAppApi\\blogAppApi.csproj",
+        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Acer\\Desktop\\my projects\\blogAppApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/shashinoorghimire/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

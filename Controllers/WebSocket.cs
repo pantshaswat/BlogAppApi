@@ -28,12 +28,12 @@ namespace blogApp.Data
             {
                 Console.WriteLine("WebSocket Request");
                 var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-                Console.WriteLine("WebSocket Connected");
+                Console.WriteLine("WebSocket Connected with userId: " + userId);
                 _sockets.TryAdd(userId, webSocket);
 
                 try
                 {
-                    await SendNotification(userId, "Hello"); // Send initial message
+                
                     await ReceiveMessage(webSocket, userId); // Listen for incoming messages
                 }
                 catch (Exception ex)

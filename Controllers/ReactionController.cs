@@ -34,7 +34,27 @@ public class ReactionController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Reaction>> PostBlogReaction(Reaction reaction)
     {
-
+        var reactingUser = await _context.Users.FindAsync(reaction.UserId);
+         if (reaction.BlogId != null)
+        {
+          var userId = _context.Blogs.Find(reaction.BlogId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{reactingUser.Username} reacted your blog";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            
+        }
+        else if (reaction.CommentId != null)
+        {
+          var userId = _context.Comments.Find(reaction.CommentId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{reactingUser.Username} reacted your comment";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            
+        }
         _context.Reactions.Add(reaction);
         await _context.SaveChangesAsync();
         return CreatedAtAction("GetReaction", new { id = reaction.ReactionId }, reaction);
@@ -43,7 +63,28 @@ public class ReactionController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutReaction([FromRoute] int id, Reaction reaction)
     {
-        Console.WriteLine(id);
+        
+        var reactingUser = await _context.Users.FindAsync(reaction.UserId);
+         if (reaction.BlogId != null)
+        {
+          var userId = _context.Blogs.Find(reaction.BlogId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{reactingUser.Username} reacted your blog";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            
+        }
+        else if (reaction.CommentId != null)
+        {
+          var userId = _context.Comments.Find(reaction.CommentId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{reactingUser.Username} reacted your comment";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            
+        }
 
         if (id != reaction.ReactionId)
         {

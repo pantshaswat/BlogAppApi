@@ -34,6 +34,15 @@ public class CommentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Comment>> PostComment(Comment comment)
     {
+        var commentingUser = await _context.Users.FindAsync(comment.UserId);
+          var userId = _context.Blogs.Find(comment.BlogId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{commentingUser.Username} commented your blog";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            
+        
         comment.CommentedDate = DateTime.Now;
         _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
@@ -46,6 +55,15 @@ public class CommentController : ControllerBase
         {
             return BadRequest();
         }
+
+     var commentingUser = await _context.Users.FindAsync(comment.UserId);
+          var userId = _context.Blogs.Find(comment.BlogId).UserId;
+          Notification notification = new Notification();
+            notification.UserId = userId;
+            notification.Content = $"{commentingUser.Username} edited their comment on your blog";
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+
         comment.CommentedDate = DateTime.Now;
         _context.Entry(comment).State = EntityState.Modified;
         try
